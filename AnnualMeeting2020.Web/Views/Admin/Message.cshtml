@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "弹幕列表";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/barrager.css" rel="stylesheet" />
+    <style type="text/css">
+        .container {
+            padding: 0;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+    </style>
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+</head>
+<body>
+
+</body>
+</html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/jquery.barrager.min.js"></script>
+<script type="text/javascript">
+        $(function () {
+            var serverHub = $.connection.AnnualMeeting2020Hub;
+
+            var endHeight = $(document).height();
+
+            @*添加弹幕回调*@
+            serverHub.client.addMessage = function (uname, message) {
+                $('body').barrager({ 'info': messageFilter(message), href: "javascript:;", speed: 15,bottom: randomFrom(10, endHeight) });
+            }
+
+            @*开始链接*@
+            $.connection.hub.start().done(function () {
+                @*连接成功时触发*@
+                //alert("弹幕列表连接成功！");
+            }).fail(function (error) {
+                alert("弹幕列表连接失败！");
+            });
+        });
+</script>

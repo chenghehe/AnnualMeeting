@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+    ViewData["Title"] = "登录";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Account.css" rel="stylesheet" />
+    <style type="text/css">
+        .row{
+                margin-top: 21%;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col m-auto col-auto">
+                    @using (Ajax.BeginForm("Login", "Account", null, new AjaxOptions
+                    {
+                        HttpMethod = "Post",
+                        OnSuccess = "OnSuccess",
+                        OnFailure = "OnFailure",
+                    }, new
+                    {
+                        @class = "form-horizontal"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="heading">
+                            @ViewData["Title"]
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-user"></i>
+                            <input required name="userName" type="text" class="form-control" placeholder="姓名">
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-mobile-phone"></i>
+                            <input required name="phone" type="text" class="form-control" placeholder="手机号" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-right"></i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script type="text/javascript">
+    function OnFailure(context) {
+        console.log(context)
+    }
+    function OnSuccess(data) {
+        if (data.StatusCode == 200) {
+            console.log(data.Result);
+            window.location.href = data.Result;
+        } else {
+            alert(data.Result);
+            window.location = location;
+        }
+    }
+</script>

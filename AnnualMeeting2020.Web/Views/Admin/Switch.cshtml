@@ -1,0 +1,118 @@
+﻿@using AnnualMeeting2020.Web.Models
+@model IEnumerable<SwitchViewModel>
+
+@{
+    ViewBag.Title = "切歌";
+}
+
+@*@using (Ajax.BeginForm("Switch", "Admin", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnSuccess = "OnSuccess",
+        OnFailure = "OnFailure",
+    }, new
+    {
+        @class = "form-horizontal"
+    }))
+    {
+        @Html.AntiForgeryToken()*@
+<div class="form-group">
+    <button type="button" id="switchMessage" class="btn btn-primary btn-block">
+        @(ViewBag.IsMessage + "弹幕")
+    </button>
+</div>
+@foreach (var item in Model)
+{
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="radio" name="performerId" value="@item.Id">
+            </div>
+        </div>
+        @{
+            var userName = string.Empty;
+            if (string.IsNullOrEmpty(item.CombinationName))
+            {
+                foreach (var name in item.UserName)
+                {
+                    userName += name + "|";
+                }
+            }
+            else
+            {
+                userName = item.CombinationName;
+            }
+            userName = userName.Trim('|');
+        }
+        <input readonly type="text" class="form-control" value="@(item.IdPerform ? "(已上台)" : "") @item.TeamName - @userName - @item.ProgramName">
+    </div>
+}
+<div class="form-group">
+    <button type="button" id="submit" class="btn btn-primary btn-block">
+        切换
+    </button>
+</div>
+
+@* } *@
+@section scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var serverHub = $.connection.AnnualMeeting2020Hub;
+
+            @*切歌结果回调*@
+            serverHub.client.switchResult = function (message) {
+                alert(message);
+                location = location;
+            }
+
+            //操作弹幕回调
+            serverHub.client.switchMessageResult = function (message) {
+                alert(message);
+                location = location;
+            }
+
+            document.querySelector("#submit").addEventListener("click", function () {
+                var id = $('input:radio:checked').val();
+
+                @*切歌*@
+                serverHub.server.Switch(
+                    id
+                ).fail(function (error) {
+                    alert('切歌失败！' + error);
+                });
+            });
+
+            //打开/关闭弹幕
+            $("#switchMessage").on("click", function () {
+                 serverHub.server.SwitchMessage(
+                ).fail(function (error) {
+                    alert('操作失败！' + error);
+                });
+            });
+
+            @*
+            //关闭弹幕
+            $("#close").on("click", function () {
+                 serverHub.server.CloseMessage(
+                ).fail(function (error) {
+                    alert('操作失败！' + error);
+                });
+            });
+                *@
+
+            @*开始连接*@
+            $.connection.hub.start().done(function () {
+                @*连接成功时触发*@
+                //alert("连接成功！");
+            }).fail(function (error) {
+                alert("服务器连接失败！");
+            });
+        });
+
+    </script>
+}

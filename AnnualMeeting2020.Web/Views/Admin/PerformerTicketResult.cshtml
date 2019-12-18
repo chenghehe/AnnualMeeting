@@ -1,0 +1,148 @@
+﻿@using AnnualMeeting2020.Web.Models
+@model List<PerformerTicketResultViewModel>
+@{
+    Layout = null;
+    ViewBag.Title = "选手得票情况";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+    <style type="text/css">
+        p {
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body>
+    <div @*class="container"*@>
+        <div class="row">
+            <div class="col-3 left">
+                <div class="text-center">
+                    <h2 class="text-center">
+                        第一批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((1 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+
+                    <hr />
+                    <h2 class="text-center">
+                        第二批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((2 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+
+                    <hr />
+                    <h2 class="text-center">
+                        第三批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((3 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div class="offset-6 col-3">
+                <div class="text-center">
+                    <h2 class="text-center">
+                        第一批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((1 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+
+                    <hr />
+                    <h2 class="text-center">
+                        第二批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((2 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+
+                    <hr />
+                    <h2 class="text-center">
+                        第三批选手得票情况
+                    </h2>
+                    @foreach (var item in Model.Skip((3 - 1) * 5).Take(5))
+                    {
+                        <p class="player">
+                            @item.TeamName - @item.UserName - @item.ProgramName - <span class="@item.Id">
+                                <span class="count">
+                                    @item.Count
+                                </span>
+                            </span>
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script type="text/javascript">
+        $(function () {
+            var serverHub = $.connection.AnnualMeeting2020Hub;
+
+            @*投票回调*@
+            serverHub.client.finalVote = function (pid, count) {
+                $("."+pid).text(count);
+            }
+
+            @*开始连接*@
+            $.connection.hub.start().done(function () {
+                @*连接成功时触发*@
+                //alert("连接成功！");
+            }).fail(function (error) {
+                alert("服务器连接失败！");
+            });
+        });
+
+</script>

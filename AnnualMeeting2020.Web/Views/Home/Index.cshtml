@@ -1,0 +1,122 @@
+﻿@using AnnualMeeting2020.Web.Models
+@model IEnumerable<PerformerOut>
+@{
+    ViewBag.Title = "首页";
+}
+
+@foreach (var item in Model)
+{
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                @if (item.IdPerform)
+                {
+                    <input type="checkbox" name="@(item.IsSelect ? "" : "select")" checked="@item.IsSelect" @(item.IsSelect ? "disabled" : "") value="@item.Id" id="@item.Id" />
+                }
+                else
+                {
+                    <div onclick="alert('该选手未上台，暂不能投票！');">
+                        <input type="checkbox" disabled value="@item.Id" />
+                    </div>
+                }
+            </div>
+        </div>
+        @{
+            var userName = string.Empty;
+            if (string.IsNullOrEmpty(item.CombinationName))
+            {
+                foreach (var name in item.UserName)
+                {
+                    userName += name + "|";
+                }
+            }
+            else
+            {
+                userName = item.CombinationName;
+            }
+            userName = userName.Trim('|');
+        }
+        <input readonly type="text"
+               data-id="@item.Id" 
+               @(item.IdPerform ? "onclick = selectItem(this)" : "onclick = alert(\"该选手未上台，暂不能投票！\")") class="form-control" 
+               value="@(item.IsSelect ? " (已投)" : "") @item.TeamName - @userName - @item.ProgramName">
+    </div>
+}
+<div class="text-center font-weight-bold">
+    已投票数：@ViewBag.Surplus 票  剩余票数：@ViewBag.Count 票
+</div>
+<button type="button" id="submit" class="btn btn-outline-primary btn-block">
+    投票
+</button>
+@section scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+            function selectItem(t) {
+                var id = "#" + $(t).data("id");
+                if ($(id).prop("checked")) {
+                    $(id).prop("checked", false);
+                } else {
+                    $(id).prop("checked", true);
+                }
+        }
+
+        @*
+        fetch("/Home/GetAll")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                data.forEach(item => {
+                    this.list.push(item);
+                });
+            })
+            .catch(error => console.log('error is', error));
+            *@
+
+        $(function () {
+
+            var serverHub = $.connection.AnnualMeeting2020Hub;
+
+            @*投票回调*@
+            serverHub.client.voteResult = function (message) {
+                alert(message);
+                location = location;
+            }
+
+             @*切歌时触发*@
+            serverHub.client.switchCurrent = function (player, count) {
+                location = location;
+            }
+
+            document.querySelector("#submit").addEventListener("click", function () {
+                var id = document.getElementsByName('select');
+                var ids = "";
+                for (var i = 0; i < id.length; i++) {
+                    if (id[i].checked)
+                        ids += id[i].value + ",";
+                }
+                console.log(ids);
+
+                //投票
+                serverHub.server.Vote(
+                    ids
+                ).fail(function (error) {
+                    alert('投票失败！' + error);
+                });
+            });
+
+            @*开始连接*@
+            $.connection.hub.start().done(function () {
+                @*连接成功时触发*@
+                //alert("连接成功！");
+            }).fail(function (error) {
+                alert("服务器连接失败！");
+            });
+        });
+
+        function msg() {
+            alert("该选手未上台，暂不能投票！");
+        }
+    </script>
+}

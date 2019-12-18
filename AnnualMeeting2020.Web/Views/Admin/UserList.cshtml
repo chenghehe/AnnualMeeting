@@ -1,0 +1,46 @@
+﻿@model List<AnnualMeeting2020.EntityFramwork.Models.User>
+@{
+    ViewBag.Title = "用户列表";
+}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>用户名</th>
+                <th>手机号</th>
+                <th>剩余票数</th>
+                <th>身份</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-primary">
+                    <td>
+                        @item.UserName
+                    </td>
+                    <td>
+                        @item.Phone
+                    </td>
+                    <td>
+                        @item.TicketCount
+                    </td>
+                    <td>
+                        @item.Type
+                    </td>
+                    <td>
+                        @if (item.Id.ToString() != User.Identity.Name)
+                        {
+                            <a href="@Url.Action("UpdateUser","Admin",new {item.Id })">修改资料</a>
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

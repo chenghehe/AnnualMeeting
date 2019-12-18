@@ -1,0 +1,107 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "实时投票";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/barrager.css" rel="stylesheet" />
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+    <style type="text/css">
+        .container {
+            padding: 0;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+
+        .col-3 {
+            color: red;
+            font-size: 30px;
+        }
+
+        .player {
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="row">
+            <div class="col-3">
+                <div class="text-center">
+                    <span class="player">
+                        @ViewBag.Player
+                    </span>
+                    <h1 class="currTicketCount font-weight-bold">
+                        @ViewBag.Count
+                    </h1>
+                </div>
+            </div>
+            <div class="offset-6 col-3">
+                <div class="text-center">
+                    <span class="player">
+                        @ViewBag.Player
+                    </span>
+                    <h1 class="currTicketCount font-weight-bold">
+                        @ViewBag.Count
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div id="messageList">
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/jquery.barrager.min.js"></script>
+<script type="text/javascript">
+        $(function () {
+            var serverHub = $.connection.AnnualMeeting2020Hub;
+
+            @*添加弹幕回调*@
+            serverHub.client.addMessage = function (uname, message) {
+                var startHeight = $(".row").height();
+                var endHeight = $(document).height() - startHeight;
+                $('body').barrager({ 'info': messageFilter(message), href: "javascript:;", speed: 15 , bottom: randomFrom(startHeight, endHeight) });
+            }
+
+            @*实时票数，用户投票时触发*@
+            serverHub.client.currTicketCount = function (result) {
+                $(".currTicketCount").html(result);
+            }
+
+            @*切歌时触发*@
+            serverHub.client.switchCurrent = function (player,count) {
+                $(".player").html(player);
+                $(".currTicketCount").html(count);
+            }
+
+            @*开始链接*@
+            $.connection.hub.start().done(function () {
+                //alert("弹幕列表连接成功！");
+            }).fail(function (error) {
+                alert("弹幕列表连接失败！");
+            });
+        });
+
+</script>

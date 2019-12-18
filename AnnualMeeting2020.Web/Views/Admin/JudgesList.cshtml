@@ -1,0 +1,88 @@
+﻿@using AnnualMeeting2020.Web.Models
+@model List<Judges_PerformerViewModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        评委打分列表
+    </title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+        @if (Model == null || Model.Count <= 0)
+        {
+            <h1 class=" text-center justify-content-center">暂无数据</h1>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>节目</th>
+                            <th>评委</th>
+                            <th>分数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var userName = string.Empty;
+                            if (string.IsNullOrEmpty(item.CombinationName))
+                            {
+                                foreach (var name in item.PerformerUserName)
+                                {
+                                    userName += name + "|";
+                                }
+                            }
+                            else
+                            {
+                                userName = item.CombinationName;
+                            }
+                            userName = userName.Trim('|');
+                            <tr class="table-success text-white">
+                                <td>
+                                    @item.TemaName - @userName - @item.ProgramName
+                                </td>
+                                <td>@item.UserName</td>
+                                <td class="fraction" >@item.Fraction</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+</body>
+</html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script type="text/javascript">
+
+    $(function () {
+        var serverHub = $.connection.AnnualMeeting2020Hub;
+
+        @*刷新*@
+        serverHub.client.refresh = function () {
+            location = location;
+        }
+                  @*开始链接*@
+        $.connection.hub.start().done(function () {
+            //alert("连接弹幕成功！");
+        }).fail(function (error) {
+            alert("连接服务器失败！");
+        });
+    });
+</script>

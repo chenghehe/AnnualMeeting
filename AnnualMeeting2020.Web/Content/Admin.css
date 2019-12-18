@@ -1,0 +1,17 @@
+﻿body {
+    background-color: #0094ff;
+    /*color:#ffffff;*/
+}
+
+.fraction {
+    color: red;
+}
+
+.count {
+    color: red;
+    font-size: 30px;
+}
+
+.player {
+    color: #ffffff;
+}
