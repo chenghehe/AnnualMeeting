@@ -193,11 +193,10 @@ namespace AnnualMeeting2020.Web.Controllers
                         .Where(x => x.UserId == uId)
                         .Select(x => new JudgesViewModel
                         {
-                            Fraction = x.Fraction,
+                            Fraction = (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress),
                             ProgramName = x.Performer.ProgramName,
                             TeamName = x.Performer.Team.Name,
                             UserName = x.Performer.Users.Select(u => u.UserName),
-
                         })
                         .OrderBy(x => x.Fraction)
                         .AsNoTracking()
@@ -233,11 +232,15 @@ namespace AnnualMeeting2020.Web.Controllers
         /// <summary>
         /// 评委评分
         /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="fraction"></param>
+        /// <param name="pid">选手编号</param>
+        /// <param name="Feeling">感情分数</param>
+        /// <param name="Pronounce">咬字分数</param>
+        /// <param name="Intonation">音准节奏分数</param>
+        /// <param name="Performance">舞台表现分数</param>
+        /// <param name="Progress">完成度分数</param>
         /// <returns></returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Judges(int pid, double fraction)
+        public async Task<ActionResult> Judges(int pid, double Feeling, double Pronounce, double Intonation, double Performance, double Progress)
         {
             if (pid > 0)
             {
@@ -255,7 +258,11 @@ namespace AnnualMeeting2020.Web.Controllers
                     var jp = await _db.Judges_Performer.FirstOrDefaultAsync(x => x.UserId == currUser.Id && x.PerformerId == pid);
                     if (jp != null)       //已经评分过了，修改
                     {
-                        jp.Fraction = fraction;
+                        jp.Feeling = Feeling;
+                        jp.Pronounce = Pronounce;
+                        jp.Intonation = Intonation;
+                        jp.Performance = Performance;
+                        jp.Progress = Progress;
                         _db.Entry(jp).State = EntityState.Modified;
                     }
                     else
@@ -264,7 +271,11 @@ namespace AnnualMeeting2020.Web.Controllers
                         {
                             UserId = currUser.Id,
                             PerformerId = pid,
-                            Fraction = fraction,
+                            Feeling = Feeling,
+                            Pronounce = Pronounce,
+                            Intonation = Intonation,
+                            Performance = Performance,
+                            Progress = Progress,
                         });
                     }
                     var result = await _db.SaveChangesAsync();
@@ -317,7 +328,7 @@ namespace AnnualMeeting2020.Web.Controllers
                             CombinationName = x.Performer.CombinationName,
                             ProgramName = x.Performer.ProgramName,
                             PerformerUserName = x.Performer.Users.Select(u => u.UserName),
-                            Fraction = x.Fraction,
+                            Fraction = /*x.Fraction*/(x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress),
                             TemaName = x.Performer.Team.Name,
                         })
                         .AsNoTracking()

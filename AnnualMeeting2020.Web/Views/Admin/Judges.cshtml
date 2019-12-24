@@ -50,10 +50,32 @@
             }
         </select>
     </div>
-    <div class="form-group">
-        <label for="fraction">分数：</label>
+    @*<div class="form-group">
+        <label for="fraction">感情：</label>
         <input type="number" min="1" max="100" step="0.01" class="form-control" name="fraction" id="fraction" placeholder="请输入分数">
+    </div>*@
+
+    <div class="form-group">
+        <label for="feeling">感情：</label>
+        <input type="number" min="1" max="20" step="0.01" class="form-control" name="Feeling" id="feeling" required placeholder="请输入感情分数">
     </div>
+    <div class="form-group">
+        <label for="pronounce">咬字：</label>
+        <input type="number" min="1" max="20" step="0.01" class="form-control" name="Pronounce" id="pronounce" required placeholder="请输入咬字分数">
+    </div>
+    <div class="form-group">
+        <label for="intonation">音准节奏：</label>
+        <input type="number" min="1" max="20" step="0.01" class="form-control" name="Intonation" id="intonation" required placeholder="请输入音准节奏分数">
+    </div>
+    <div class="form-group">
+        <label for="performance">舞台表现：</label>
+        <input type="number" min="1" max="20" step="0.01" class="form-control" name="Performance" id="performance" required placeholder="请输入舞台表现分数">
+    </div>
+    <div class="form-group">
+        <label for="progress">完成度：</label>
+        <input type="number" min="1" max="20" step="0.01" class="form-control" name="Progress" id="progress" required placeholder="请输入完成度分数">
+    </div>
+
     <button type="submit" class="btn btn-primary btn-block">提交评分</button>
 }
 
