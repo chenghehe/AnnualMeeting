@@ -2,7 +2,7 @@
 @model IEnumerable<SwitchOut>
 
 @{
-    ViewBag.Title = "切歌";
+    ViewBag.Title = "管理";
 }
 
 @*@using (Ajax.BeginForm("Switch", "Admin", null, new AjaxOptions
@@ -22,9 +22,9 @@
     </button>
 </div>
 <div class="form-group">
-    <a href="@Url.Action("Calculation")" id="calculation" class="btn btn-primary btn-block">
+    <button type="button" id="calculation" class="btn btn-primary btn-block">
         计算最终得分
-    </a>
+    </button>
 </div>
 
 @foreach (var item in Model)
@@ -93,11 +93,14 @@
                 });
             });
 
-            //刷新排名页面
-            serverHub.server.Refresh().fail(function (error) {
-                console.log(error);
-            });
-        });
+            //计算评分
+            $("#calculation").on("click", function () {
+                location.href = "@Url.Action("Calculation")";
+                //刷新排名页面
+                serverHub.server.Refresh().fail(function (error) {
+                    console.log(error);
+                });
+            })
 
             //打开/关闭弹幕
             $("#switchMessage").on("click", function () {
@@ -107,24 +110,18 @@
                 });
             });
 
-            @*
-            //关闭弹幕
-            $("#close").on("click", function () {
-                 serverHub.server.CloseMessage(
-                ).fail(function (error) {
-                    alert('操作失败！' + error);
-                });
-            });
-                *@
 
             @*开始连接*@
-            $.connection.hub.start().done(function () {
+             $.connection.hub.start().done(function () {
                 @*连接成功时触发*@
                 //alert("连接成功！");
             }).fail(function (error) {
                 alert("服务器连接失败！");
             });
-        });
 
+
+
+
+        });            
     </script>
 }
