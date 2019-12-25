@@ -15,17 +15,92 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Admin.css" rel="stylesheet" />
     <style type="text/css">
-        p {
+        /*p {
             font-size: 18px;
+        }*/
+        .box{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding: 0 50px;
+        }
+        .cont {
+            width: 384px;
+            background-color: #fff;
+        }
+        .list .title {
+            font-weight: 700;
+            font-size: 22px;
+            background-color: #FCF6F5;
+        }
+        .list > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 12px;
+            background-color: #fff;
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .list .list-name p{
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        .list .list-name span {
+            font-weight: 700;
+            font-size: 16px;
+            
+        }
+        .list .list-song {
+            font-size: 18px;
+            color: #8B8B8B;
+        }
+        .list .list-poll {
+            font-size: 28px;
+            font-weight: 700;
+            color: #E9624D;
         }
 
     </style>
 </head>
 <body>
     <div @*class="container"*@>
-        <div class="row">
+        <div class="box">
+            <div class="cont">
+                <div class="list">
+                    <div class="title">第一批选手得票情况</div>
+                    <div>
+                        <div class="list-name">
+                            <p>方块一</p>
+                            <span>谭剑雄</span>
+                        </div>
+                        <div class="list-song">
+                            果汁分你一半
+                        </div>
+                        <div class="list-poll">231</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cont">
+                <div class="list">
+                    <div class="title">第一批选手得票情况</div>
+                    <div>
+                        <div class="list-name">
+                            <p>方块一</p>
+                            <span>谭剑雄</span>
+                        </div>
+                        <div class="list-song">
+                            果汁分你一半
+                        </div>
+                        <div class="list-poll">231</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
             <div class="col-3 left">
                 <div class="text-center">
+                    
                     <h2 class="text-center">
                         第一批选手得票情况
                     </h2>
@@ -119,7 +194,7 @@
                     }
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
