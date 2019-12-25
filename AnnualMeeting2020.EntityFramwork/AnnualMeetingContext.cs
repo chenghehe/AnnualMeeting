@@ -41,10 +41,10 @@ namespace AnnualMeeting2020.EntityFramwork
         /// </summary>
         public IDbSet<Judges_Performer> Judges_Performer { get; set; }
 
-        /// <summary>
-        /// 得分结果
-        /// </summary>
-        public IDbSet<MatchResult> MatchResult { get; set; }
+        ///// <summary>
+        ///// 得分结果
+        ///// </summary>
+        //public IDbSet<MatchResult> MatchResult { get; set; }
 
         /// <summary>
         /// 投票表，多对多，中间表
@@ -72,10 +72,10 @@ namespace AnnualMeeting2020.EntityFramwork
                 x.PerformerId,
                 x.UserId,
             }).IsUnique();
-            modelBuilder.Entity<MatchResult>().HasIndex(x => new
-            {
-                x.PerformerId,
-            }).IsUnique();
+            //modelBuilder.Entity<MatchResult>().HasIndex(x => new
+            //{
+            //    x.PerformerId,
+            //}).IsUnique();
         }
     }
 }

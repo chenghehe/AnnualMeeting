@@ -8,7 +8,7 @@ namespace AnnualMeeting2020.Web.Models
     /// <summary>
     /// 评分打分
     /// </summary>
-    public class Judges_PerformerViewModel
+    public class Judges_PerformerOut
     {
         /// <summary>
         /// 评委

@@ -5,6 +5,8 @@ using AnnualMeeting2020.Web.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -75,7 +77,7 @@ namespace AnnualMeeting2020.Web.Controllers
         {
             if (_getLoginUser().UserType.HasFlag(UserType.管理员))
             {
-                var list = await _db.Performer.Select(x => new SwitchViewModel
+                var list = await _db.Performer.Select(x => new SwitchOut
                 {
                     Id = x.Id,
                     IdPerform = x.IdPerform,
@@ -191,7 +193,7 @@ namespace AnnualMeeting2020.Web.Controllers
 
                     var judges_Performer = await _db.Judges_Performer
                         .Where(x => x.UserId == uId)
-                        .Select(x => new JudgesViewModel
+                        .Select(x => new JudgesOut
                         {
                             Fraction = (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress),
                             ProgramName = x.Performer.ProgramName,
@@ -322,7 +324,7 @@ namespace AnnualMeeting2020.Web.Controllers
                 {
                     var list = await _db.Judges_Performer
                         .Where(x => x.PerformerId == player.Id)
-                        .Select(x => new Judges_PerformerViewModel
+                        .Select(x => new Judges_PerformerOut
                         {
                             UserName = x.User.UserName,
                             CombinationName = x.Performer.CombinationName,
@@ -345,12 +347,12 @@ namespace AnnualMeeting2020.Web.Controllers
         /// 用户列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ActionResult> UserList()
+        public async Task<ActionResult> UserList(string searchText)
         {
             var uid = Convert.ToInt32(HttpContext.User.Identity.Name);
             if (await _db.User.AnyAsync(x => x.Id == uid && x.UserType.HasFlag(UserType.管理员)))
             {
-                var users = _db.User.ToListAsync();
+                var users = string.IsNullOrEmpty(searchText) ? _db.User.ToListAsync() : _db.User.Where(x => x.Phone.Contains(searchText) || x.UserName.Contains(searchText)).ToListAsync();
                 return View(await users);
             }
             else
@@ -429,7 +431,7 @@ namespace AnnualMeeting2020.Web.Controllers
              select b.Name as TeamName, a.*, (select count(*) from [dbo].[User_Performer] where PerformerId=a.Id) as Count from [dbo].[Performer] as a left join [dbo].[Team] as b on b.Id=a.TeamId left join [dbo].[User] as c on c.Performer_Id =a.Id
              */
             var sql = "select b.Name as TeamName, a.*, (select count(*) from [dbo].[User_Performer] where PerformerId=a.Id) as Count from [dbo].[Performer] as a left join [dbo].[Team] as b on b.Id=a.TeamId ";
-            var queryResult = _db.Database.SqlQuery<PerformerTicketResultViewModel>(sql)/*.GroupBy(x=>x.TeamName)*/.OrderBy(x => x.Sort).ToList();
+            var queryResult = _db.Database.SqlQuery<PerformerTicketResultOut>(sql)/*.GroupBy(x=>x.TeamName)*/.OrderBy(x => x.Sort).ToList();
             queryResult.ForEach(async item =>
             {
                 var users = _db.Performer.Find(item.Id).Users;
@@ -454,9 +456,211 @@ namespace AnnualMeeting2020.Web.Controllers
         /// 排名
         /// </summary>
         /// <returns></returns>
-        public async Task<ActionResult> Ranking()
+        [AllowAnonymous]
+        public async Task<ActionResult> Ranking(CancellationToken cancellationToke)
+        {
+            var rankModel = new RankingOut
+            {
+                Performers = await _db.Performer
+                .AsNoTracking()
+                .Select(x => new PerformerOut
+                {
+                    ProgramName = x.ProgramName,
+                    CombinationName = x.CombinationName,
+                    TeamName = x.Team.Name,
+                    IdPerform = x.IdPerform,
+                    Score = x.Score,
+                    UserName = x.Users.Select(u => u.UserName),
+                })
+                .OrderByDescending(x => x.Score)
+                .Take(3)
+                .ToListAsync(cancellationToke),
+                Teams = await _db.Team
+                .Select(x => new TeamOut
+                {
+                    Name = x.Name,
+                    Fraction = x.Fraction,
+                })
+                .OrderByDescending(x => x.Fraction)
+                //.Take(3)
+                .ToListAsync(cancellationToke)
+            };
+            return View(rankModel);
+        }
+
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> AddUser()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="name">姓名</param>
+        /// <param name="tel">手机号</param>
+        /// <returns></returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddUser(string name, string tel)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(tel))
+            {
+                return Json(new
+                {
+                    StatusCode = HttpStatusCode.BadGateway,
+                    Result = "添加失败，必填项不能为空！",
+                });
+            }
+            else
+            {
+                var uid = Convert.ToInt32(HttpContext.User.Identity.Name);
+                if (await _db.User.AnyAsync(x => x.Id == uid && x.UserType.HasFlag(UserType.管理员)))
+                {
+                    _db.User.Add(new User
+                    {
+                        UserName = name.Trim(),
+                        Phone = tel.Trim(),
+                    });
+                    var result = await _db.SaveChangesAsync();
+                    if (result > 0)
+                    {
+                        return Json(new
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Result = "添加成功！",
+                        });
+                    }
+                }
+            }
+            return Json(new
+            {
+                StatusCode = HttpStatusCode.BadGateway,
+                Result = "添加失败！权限不足！",
+            });
+        }
+
+        /// <summary>
+        /// 各环节加分项
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> AddFraction(CancellationToken cancellationToke)
+        {
+            var list = _db.Team.Where(x => !x.IsAdditionalFraction).ToListAsync(cancellationToke);
+            return View(await list);
+        }
+
+        /// <summary>
+        /// 各环节加分项
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddFraction(int tid, double youAndMeSing, double interaction)
+        {
+            var uid = Convert.ToInt32(HttpContext.User.Identity.Name);
+            if (await _db.User.AnyAsync(x => x.Id == uid && x.UserType.HasFlag(UserType.管理员)))
+            {
+                var team = _db.Team.Find(tid);
+
+                team.YouAndMeSing = youAndMeSing;
+                team.Interaction = interaction;
+                team.IsAdditionalFraction = true;
+                _db.Entry(team).State = EntityState.Modified;
+                var result = await _db.SaveChangesAsync();
+                if (result > 0)
+                    return Json(new
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Result = "修改成功！"
+                    });
+                return Json(new
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Result = "修改失败！"
+                });
+            }
+            return Json(new
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Result = "修改失败,权限不足！"
+            });
+        }
+
+        /// <summary>
+        /// 计算最终得分
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> Calculation(CancellationToken cancellationToken)
+        {
+            try
+            {
+                #region 个人选手计算得分
+                //用户总数
+                var userCount = await _db.User.CountAsync(x => x.UserType == UserType.普通用户, cancellationToken);
+
+                //选手表
+                var performers = await _db.Performer.ToListAsync(cancellationToken);
+
+                //评委表
+                var judges_Performers = await _db.Judges_Performer.AsNoTracking().ToListAsync(cancellationToken);
+
+                //用户投票表
+                var user_Performers = await _db.User_Performer.AsNoTracking().ToListAsync(cancellationToken);
+
+                foreach (var item in performers)
+                {
+                    //1.评委
+                    var pwagv = judges_Performers
+                        .Where(x => x.PerformerId == item.Id)
+                        .DefaultIfEmpty()
+                        .Average(x => (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress));
+                    var pw = pwagv == 0 ? 0 : pwagv * 0.75;
+
+                    //2. 大众
+                    var dzf = user_Performers
+                        .Where(x => x.PerformerId == item.Id)
+                        .DefaultIfEmpty()
+                        .Count();
+                    var dz = (dzf == 0 ? 0 : dzf / userCount) * 100 * 0.2;
+                    item.Score = item.FabulousFraction + pw + dz;
+                    _db.Entry(item).State = EntityState.Modified;
+                }
+                await _db.SaveChangesAsync();
+                #endregion
+
+                #region 方队计算得分
+
+                //方队
+                var teams = await _db.Team.ToListAsync(cancellationToken);
+
+                teams.ForEach(item =>
+                {
+                    //当前方队选手
+                    var ps = performers.Where(x => x.TeamId == item.Id);
+
+                    //当前方队选手数量
+                    var psCount = ps.Count();
+
+                    //得分1，1. 方队3位歌手/组合总分取平均值，占比70%
+                    var scoreSum = ps.DefaultIfEmpty().Sum(x => x.Score);
+                    var f1 = (scoreSum == 0 ? 0 : scoreSum / psCount) * 0.7;
+
+                    //最终得分
+                    item.Fraction = item.Preliminaries + item.YouAndMeSing + item.Interaction + f1;
+                    _db.Entry(item).State = EntityState.Modified;
+                });
+                await _db.SaveChangesAsync();
+                #endregion
+            }
+            catch (Exception e)
+            {
+                return Content("操作失败！");
+                //throw;
+            }
+            return Content("操作成功！");
         }
 
         /// <summary>

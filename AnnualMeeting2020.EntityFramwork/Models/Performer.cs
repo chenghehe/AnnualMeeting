@@ -45,5 +45,16 @@ namespace AnnualMeeting2020.EntityFramwork.Models
         /// 排序标识
         /// </summary>
         public int? Sort { get; set; }
+
+
+        /// <summary>
+        /// 朋友圈或者微视频点赞数 得分
+        /// </summary>
+        public double FabulousFraction { get; set; } = 0;
+
+        /// <summary>
+        /// 最终得分
+        /// </summary>
+        public double Score { get; set; } = 0;
     }
 }

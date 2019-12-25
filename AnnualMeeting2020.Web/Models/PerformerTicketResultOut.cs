@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AnnualMeeting2020.Web.Models
 {
-    public class PerformerTicketResultViewModel
+    public class PerformerTicketResultOut
     {
         /// <summary>
         /// 演员表id

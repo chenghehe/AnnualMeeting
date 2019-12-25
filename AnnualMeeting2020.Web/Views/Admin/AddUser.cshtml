@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "添加用户信息";
+}
+
+@using (Ajax.BeginForm("AddUser", "Admin", null, new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnBegin = "OnBegin",
+    OnSuccess = "OnSuccess",
+    OnFailure = "OnFailure",
+}, new
+{
+    //@class = "form-horizontal"
+}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="name">姓名：</label>
+        <input type="text" maxlength="6" class="form-control" name="name" id="name" required placeholder="请输入姓名">
+    </div>
+    <div class="form-group">
+        <label for="tel">手机号：</label>
+        <input type="number" class="form-control" maxlength="11" required name="tel" id="tel" placeholder="请输入手机号">
+    </div>
+    <button type="submit" id="submit" class="btn btn-primary btn-block">添加</button>
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnBegin() {
+            $("#submit").attr('disabled','disabled');
+        }
+        function OnFailure(context) {
+             alert("服务器错误！");
+        }
+        function OnSuccess(data) {
+            $("#submit").removeAttr('disabled');
+            if (data.StatusCode == 200) {
+                alert(data.Result);
+                window.location.href = '@Url.Action("UserList","Admin")';
+            } else {
+                alert(data.Result);
+                window.location.href = '@Url.Action("UserList","Admin")';
+            }
+        }
+    </script>
+}

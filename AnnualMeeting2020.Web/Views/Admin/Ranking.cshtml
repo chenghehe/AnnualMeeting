@@ -1,12 +1,92 @@
-﻿
+﻿@model AnnualMeeting2020.Web.Models.RankingOut
+@using AnnualMeeting2020.Common
+
 @{
     ViewBag.Title = "最终排名";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link href="~/Content/barrager.css" rel="stylesheet" />*@
+    <style type="text/css">
+        .container {
+            padding: 0;
+        }
 
-<div class="text-center">
-    <h2>排名顺序</h2>
-    <p>
-        第一名：方块+名字+歌曲+分数
-    </p>
-</div>
+        .container-fluid {
+            padding: 0;
+        }
+    </style>
+    <link href="~/Content/Admin.css" rel="stylesheet" />
+</head>
+<body>
 
+    <div class="container">
+        <div class="text-center">
+            <h1>个人排名</h1>
+            @for (int i = 0; i < Model.Performers.Count; i++)
+            {
+                var item = Model.Performers[i];
+                var userName = string.Empty;
+                if (string.IsNullOrEmpty(item.CombinationName))
+                {
+                    foreach (var name in item.UserName)
+                    {
+                        userName += name + "|";
+                    }
+                }
+                else
+                {
+                    userName = item.CombinationName;
+                }
+                userName = userName.Trim('|');
+                <p>
+                    第@(NumberHelper.NumberToChinese((i + 1).ToString()))名：@item.TeamName - @(userName) - @item.ProgramName - @item.Score
+                </p>
+            }
+        </div>
+
+        <hr />
+
+        <div class="text-center">
+            <h1>方队排名</h1>
+            @for (int i = 0; i < Model.Teams.Count; i++)
+            {
+                var item = Model.Teams[i];
+                <p>
+                    第@(NumberHelper.NumberToChinese((i + 1).ToString()))名：@item.Name - @item.Fraction
+                </p>
+            }
+        </div>
+    </div>
+
+</body>
+</html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+@*<script src="~/Scripts/jquery.barrager.min.js"></script>*@
+<script type="text/javascript">
+    $(function () {
+        var serverHub = $.connection.AnnualMeeting2020Hub;
+
+        @*刷新*@
+        serverHub.client.refresh = function () {
+            location = location;
+        }
+                  @*开始链接*@
+        $.connection.hub.start().done(function () {
+            
+        }).fail(function (error) {
+            alert("连接服务器失败！");
+        });
+    });
+</script>

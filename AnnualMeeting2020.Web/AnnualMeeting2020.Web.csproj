@@ -166,12 +166,14 @@
     </Compile>
     <Compile Include="Hubs\AnnualMeeting2020Hub.cs" />
     <Compile Include="Hubs\Barrage.cs" />
-    <Compile Include="Models\JudgesViewModel.cs" />
-    <Compile Include="Models\Judges_PerformerViewModel.cs" />
+    <Compile Include="Models\JudgesOut.cs" />
+    <Compile Include="Models\Judges_PerformerOut.cs" />
     <Compile Include="Models\LoginInput.cs" />
     <Compile Include="Models\PerformerOut.cs" />
-    <Compile Include="Models\PerformerTicketResultViewModel.cs" />
-    <Compile Include="Models\SwitchViewModel.cs" />
+    <Compile Include="Models\RankingOut.cs" />
+    <Compile Include="Models\PerformerTicketResultOut.cs" />
+    <Compile Include="Models\SwitchOut.cs" />
+    <Compile Include="Models\TeamOut.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +286,8 @@
     <Content Include="Views\Admin\PerformerTicketResult.cshtml" />
     <Content Include="Views\Admin\Ranking.cshtml" />
     <Content Include="Views\Admin\JudgesList.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\AddFraction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

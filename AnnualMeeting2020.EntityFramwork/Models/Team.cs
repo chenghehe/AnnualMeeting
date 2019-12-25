@@ -10,12 +10,37 @@ namespace AnnualMeeting2020.EntityFramwork.Models
     /// </summary>
     public class Team : BaseModel
     {
-        [MaxLength(15)]
+        [Required, MaxLength(15)]
         public string Name { get; set; }
         /// <summary>
         /// 排序标识
         /// </summary>
         public int? Sort { get; set; }
+
+        /// <summary>
+        /// 方队总得数
+        /// </summary>
+        public double Fraction { get; set; } = 0;
+
+        /// <summary>
+        /// 我想和你唱 环节得分
+        /// </summary>        
+        public double YouAndMeSing { get; set; } = 0;
+
+        /// <summary>
+        /// 互动得分
+        /// </summary>
+        public double Interaction { get; set; } = 0;
+
+        /// <summary>
+        /// 初赛分数
+        /// </summary>
+        public double Preliminaries { get; set; }
+
+        /// <summary>
+        /// 是否已经额外加分
+        /// </summary>
+        public bool IsAdditionalFraction { get; set; }
 
         /// <summary>
         /// 该队表演者

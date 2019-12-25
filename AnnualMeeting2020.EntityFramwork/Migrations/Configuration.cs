@@ -26,22 +26,27 @@ namespace AnnualMeeting2020.EntityFramwork.Migrations
                 var t1 = context.Team.Add(new Team
                 {
                     Name = "方块一队",
+                    Preliminaries = 1.2,
                 });
                 var t2 = context.Team.Add(new Team
                 {
                     Name = "方块二队",
+                    Preliminaries = 2.1,
                 });
                 var t3 = context.Team.Add(new Team
                 {
                     Name = "方块三队",
+                    Preliminaries = 2.0,
                 });
                 var t4 = context.Team.Add(new Team
                 {
                     Name = "方块四队",
+                    Preliminaries = 1.4,
                 });
                 var t5 = context.Team.Add(new Team
                 {
                     Name = "方块五队",
+                    Preliminaries = 3.3,
                 });
                 var user1 = new User { UserName = "一号演员", Phone = "123456789" };
                 var user2 = new User { UserName = "二号演员", Phone = "123456895" };

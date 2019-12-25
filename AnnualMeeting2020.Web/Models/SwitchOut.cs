@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AnnualMeeting2020.Web.Models
 {
-    public class SwitchViewModel
+    public class SwitchOut
     {
         /// <summary>
         /// 节目名称

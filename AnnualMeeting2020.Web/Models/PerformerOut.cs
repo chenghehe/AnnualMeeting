@@ -41,5 +41,11 @@ namespace AnnualMeeting2020.Web.Models
         /// 方块队名
         /// </summary>
         public string TeamName { get; set; }
+
+
+        /// <summary>
+        /// 最终得分
+        /// </summary>
+        public double Score { get; set; }
     }
 }
