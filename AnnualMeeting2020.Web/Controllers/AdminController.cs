@@ -4,6 +4,7 @@ using AnnualMeeting2020.EntityFramwork.Models;
 using AnnualMeeting2020.Web.Models;
 using System;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -614,10 +615,10 @@ namespace AnnualMeeting2020.Web.Controllers
                 {
                     //1.评委
                     var pwagv = judges_Performers
+                        .Where(x => x.PerformerId == item.Id).Any() ? judges_Performers
                         .Where(x => x.PerformerId == item.Id)
-                        .DefaultIfEmpty()
-                        .Average(x => (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress));
-                    var pw = pwagv == 0 ? 0 : pwagv * 0.75;
+                        .Average(x => (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress)) : 0;
+                    var pw = pwagv > 0 ? Convert.ToDouble(pwagv) * 0.75 : 0;
 
                     //2. 大众
                     var dzf = user_Performers
@@ -638,19 +639,22 @@ namespace AnnualMeeting2020.Web.Controllers
 
                 teams.ForEach(item =>
                 {
+                    Debug.WriteLine(item.Name);
                     //当前方队选手
                     var ps = performers.Where(x => x.TeamId == item.Id);
+                    if (ps.Any())
+                    {
+                        //当前方队选手数量
+                        var psCount = ps.DefaultIfEmpty().Count();
 
-                    //当前方队选手数量
-                    var psCount = ps.Count();
+                        //得分1，1. 方队3位歌手/组合总分取平均值，占比70%
+                        var scoreSum = ps.DefaultIfEmpty().Sum(x => x.Score);
+                        var f1 = (scoreSum == 0 ? 0 : scoreSum / psCount) * 0.7;
 
-                    //得分1，1. 方队3位歌手/组合总分取平均值，占比70%
-                    var scoreSum = ps.DefaultIfEmpty().Sum(x => x.Score);
-                    var f1 = (scoreSum == 0 ? 0 : scoreSum / psCount) * 0.7;
-
-                    //最终得分
-                    item.Fraction = item.Preliminaries + item.YouAndMeSing + item.Interaction + f1;
-                    _db.Entry(item).State = EntityState.Modified;
+                        //最终得分
+                        item.Fraction = item.Preliminaries + item.YouAndMeSing + item.Interaction + f1;
+                        _db.Entry(item).State = EntityState.Modified;
+                    }
                 });
                 await _db.SaveChangesAsync();
                 #endregion
