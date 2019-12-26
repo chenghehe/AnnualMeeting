@@ -2,7 +2,7 @@
 @model IEnumerable<PerformerOut>
 @{
     ViewBag.Title = "评委打分";
-    var judges_Performer = ViewData["My_Judges_Performer"] as List<JudgesViewModel>;
+    var judges_Performer = ViewData["My_Judges_Performer"] as List<JudgesOut>;
 }
 
 @section styles{
@@ -51,9 +51,9 @@
         </select>
     </div>
     @*<div class="form-group">
-        <label for="fraction">感情：</label>
-        <input type="number" min="1" max="100" step="0.01" class="form-control" name="fraction" id="fraction" placeholder="请输入分数">
-    </div>*@
+            <label for="fraction">感情：</label>
+            <input type="number" min="1" max="100" step="0.01" class="form-control" name="fraction" id="fraction" placeholder="请输入分数">
+        </div>*@
 
     <div class="form-group">
         <label for="feeling">感情：</label>
@@ -114,7 +114,21 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript">
 
-        var serverHub = $.connection.AnnualMeeting2020Hub;
+        $(function () {
+            var wHeight = window.innerHeight;   //获取初始可视窗口高度
+            window.addEventListener('resize', function () {       //监测窗口大小的变化事件
+                var hh = window.innerHeight;     //当前可视窗口高度
+                var viewTop = $(window).scrollTop();   //可视窗口高度顶部距离网页顶部的距离
+                if (wHeight > hh) {           //可以作为虚拟键盘弹出事件
+                    $(".content").animate({ scrollTop: viewTop + 100 });    //调整可视页面的位置
+                } else {         //可以作为虚拟键盘关闭事件
+                    $("content").animate({ scrollTop: viewTop - 100 });
+                }
+                wHeight = hh;
+            });
+
+
+            var serverHub = $.connection.AnnualMeeting2020Hub;
           @*开始链接*@
             $.connection.hub.start().done(function () {
                 //alert("连接弹幕成功！");
@@ -123,20 +137,21 @@
             });
 
 
-        function OnFailure(context) {
-            alert("评分失败！");
-        }
-        function OnSuccess(data) {
-            if (data.StatusCode == 200) {
-                 serverHub.server.Refresh(function (error) {
-                            console.log('Invocation of SendMessage failed.' + error);
-                        });
-                alert(data.Result);
-                window.location.href = location;
-            } else {
-                alert(data.Result);
-                window.location = location;
+            function OnFailure(context) {
+                alert("评分失败！");
             }
-        }
+            function OnSuccess(data) {
+                if (data.StatusCode == 200) {
+                    serverHub.server.Refresh(function (error) {
+                        console.log('Invocation of SendMessage failed.' + error);
+                    });
+                    alert(data.Result);
+                    window.location.href = location;
+                } else {
+                    alert(data.Result);
+                    window.location = location;
+                }
+            }
+        });
     </script>
 }

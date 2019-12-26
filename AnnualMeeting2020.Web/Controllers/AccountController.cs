@@ -17,11 +17,9 @@ namespace AnnualMeeting2020.Web.Controllers
             _db = db;
         }
 
-
-        public async Task<ActionResult> Index()
         // GET: Account
+        public async Task<ActionResult> Index()       
         {
-            new InitData().Send(_db);
             return View();
         }
 

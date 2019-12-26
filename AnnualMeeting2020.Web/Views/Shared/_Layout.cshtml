@@ -1,7 +1,7 @@
 ﻿@using AnnualMeeting2020.EntityFramwork
 @using AnnualMeeting2020.EntityFramwork.Models
 @{
-    User user = default(User);
+    User user = null;
     if (User.Identity.IsAuthenticated)
     {
         if (Session[AnnualMeeting2020Key.SESSION_USER_KEY] == null)
@@ -45,7 +45,7 @@
                             主页
                         </a>
                     </li>
-                    @if (user != default(User))
+                    @if (user != null)
                     {
                         if (user.UserType.HasFlag(UserType.普通用户))
                         {
@@ -120,7 +120,7 @@
                         {
                             <li class="nav-item dropdown ">
                                 <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-                                    @(user?.UserName)
+                                    @(user.UserName)
                                 </a>
                                 <div class="dropdown-menu">
                                     <a style="font-size:12px" class="nav-link text-dark dropdown-item" href="@Url.Action("SignOut","Account")">
