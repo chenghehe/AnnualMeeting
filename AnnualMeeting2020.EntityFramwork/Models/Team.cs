@@ -40,7 +40,7 @@ namespace AnnualMeeting2020.EntityFramwork.Models
         /// <summary>
         /// 是否已经额外加分
         /// </summary>
-        public bool IsAdditionalFraction { get; set; }
+        public bool IsAdditionalFraction { get; set; } = false;
 
         /// <summary>
         /// 该队表演者

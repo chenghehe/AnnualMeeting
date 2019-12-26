@@ -45,6 +45,6 @@ namespace AnnualMeeting2020.Web.Models
         /// <summary>
         /// 排序标识
         /// </summary>
-        public int? Sort { get; set; }
+        public int Sort { get; set; }
     }
 }

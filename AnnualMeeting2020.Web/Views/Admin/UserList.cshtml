@@ -1,4 +1,5 @@
 ﻿@model List<AnnualMeeting2020.EntityFramwork.Models.User>
+@using AnnualMeeting2020.EntityFramwork.Models
 @{
     ViewBag.Title = "用户列表";
     var searchText = Request["searchText"];
@@ -38,7 +39,7 @@
                         @item.Type
                     </td>
                     <td>
-                        @if (item.Id.ToString() != User.Identity.Name)
+                        @if (item.UserType.HasFlag(UserType.普通用户)|item.UserType.HasFlag(UserType.评委))
                         {
                             <a href="@Url.Action("UpdateUser","Admin",new {item.Id })">修改资料</a>
                         }

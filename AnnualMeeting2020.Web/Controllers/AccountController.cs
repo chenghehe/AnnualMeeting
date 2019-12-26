@@ -2,6 +2,7 @@
 using AnnualMeeting2020.EntityFramwork.Models;
 using AnnualMeeting2020.Web.Models;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -17,9 +18,10 @@ namespace AnnualMeeting2020.Web.Controllers
         }
 
 
+        public async Task<ActionResult> Index()
         // GET: Account
-        public ActionResult Index()
         {
+            new InitData().Send(_db);
             return View();
         }
 

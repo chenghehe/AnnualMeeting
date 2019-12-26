@@ -44,7 +44,7 @@ namespace AnnualMeeting2020.EntityFramwork.Models
         /// <summary>
         /// 排序标识
         /// </summary>
-        public int? Sort { get; set; }
+        public int Sort { get; set; }
 
 
         /// <summary>

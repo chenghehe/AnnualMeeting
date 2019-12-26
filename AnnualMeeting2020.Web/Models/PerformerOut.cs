@@ -8,6 +8,11 @@ namespace AnnualMeeting2020.Web.Models
     public class PerformerOut
     {
         /// <summary>
+        /// 排序标识
+        /// </summary>
+        public int Sort { get; set; }
+
+        /// <summary>
         /// 表演表id
         /// </summary>
         public int Id { get; set; }

@@ -10,6 +10,13 @@ namespace AnnualMeeting2020.Web.Models
     /// </summary>
     public class Judges_PerformerOut
     {
+
+        /// <summary>
+        /// <summary>
+        /// 排序标识
+        /// </summary>
+        public int Sort { get; set; }
+
         /// <summary>
         /// 评委
         /// </summary>

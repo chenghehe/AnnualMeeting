@@ -6,7 +6,11 @@ using System.Web;
 namespace AnnualMeeting2020.Web.Models
 {
     public class SwitchOut
-    {
+    {    /// <summary>
+         /// 排序标识
+         /// </summary>
+        public int Sort { get; set; }
+
         /// <summary>
         /// 节目名称
         /// </summary>

@@ -85,9 +85,10 @@ namespace AnnualMeeting2020.Web.Controllers
                     ProgramName = x.ProgramName,
                     TeamName = x.Team.Name,
                     TeamId = x.TeamId,
+                    Sort = x.Sort,
                     CombinationName = x.CombinationName,
                     UserName = x.Users.Select(u => u.UserName),
-                }).OrderBy(x => x.TeamId).AsNoTracking().ToListAsync();
+                }).OrderBy(x => x.TeamId).ThenBy(x => x.Sort).AsNoTracking().ToListAsync();
                 //var result = list.Select(x =>
                 // {
                 //     var entity = new SwitchViewModel
@@ -154,6 +155,7 @@ namespace AnnualMeeting2020.Web.Controllers
                             x.Performer.Users,
                             x.Performer.IdPerform,
                             x.Performer.CombinationName,
+                            x.Performer.Sort,
                             TeamName = x.Performer.Team.Name,
                             IsSelect = x.User_Performer.Any(),
                         })
@@ -166,9 +168,11 @@ namespace AnnualMeeting2020.Web.Controllers
                         TeamName = x.TeamName,
                         IdPerform = x.IdPerform,
                         //x.Users,
+                        Sort = x.Sort,
                         UserName = x.Users.Select(u => u.UserName)
                     })
                     .Where(x => !x.IsSelect)
+                    .OrderBy(x => x.Sort)
                     .AsNoTracking()
                     .ToListAsync();
 
@@ -332,6 +336,7 @@ namespace AnnualMeeting2020.Web.Controllers
                             ProgramName = x.Performer.ProgramName,
                             PerformerUserName = x.Performer.Users.Select(u => u.UserName),
                             Fraction = /*x.Fraction*/(x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress),
+                            Sort = x.Performer.Sort,
                             TemaName = x.Performer.Team.Name,
                         })
                         .AsNoTracking()

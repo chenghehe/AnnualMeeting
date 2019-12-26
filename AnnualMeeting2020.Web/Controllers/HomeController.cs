@@ -62,6 +62,7 @@ namespace AnnualMeeting2020.Web.Controllers
                     x.Performer.Users,
                     x.Performer.IdPerform,
                     x.Performer.CombinationName,
+                    x.Performer.Sort,
                     TeamName = x.Performer.Team.Name,
                     IsSelect = x.User_Performer.Any(),
                 }).Select(x => new PerformerOut
@@ -73,8 +74,10 @@ namespace AnnualMeeting2020.Web.Controllers
                     TeamName = x.TeamName,
                     IdPerform = x.IdPerform,
                     //x.Users,
-                    UserName = x.Users.Select(u => u.UserName)
+                    UserName = x.Users.Select(u => u.UserName),
+                    Sort = x.Sort,
                 })/*.GroupJoin(db.User_Performer, x => x.Id)*/
+                .OrderBy(x => x.Sort)
                 .ToListAsync();
 
                 //var list = await db.Performer.Include(x => x.Users).AsNoTracking().ToListAsync(cancellationToken);
