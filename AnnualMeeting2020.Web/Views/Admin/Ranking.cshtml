@@ -23,16 +23,47 @@
         .container-fluid {
             padding: 0;
         }
+
+        .title {
+            margin-top: 30px;
+            font-size: 40px;
+            font-weight: 700;
+            background-color: #FCF6F5;
+            text-align: center;
+        }
+
+        .list {
+            display: flex;
+            align-items: center;
+            padding: 4px 10px;
+            background-color: #fff;
+            border-bottom: 1px solid #e7e7e7;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+            .list > img {
+                width: 30px;
+                height: 30px;
+                margin-left: 24%;
+                margin-right: 20px;
+            }
+
+            .list > p {
+                margin: 0;
+                padding: 0;
+            }
     </style>
     <link href="~/Content/Admin.css" rel="stylesheet" />
 </head>
 <body>
 
     <div class="container">
-        <div class="text-center">
-            <h1>个人排名</h1>
+        <div>
+            <div class="title">歌手排名</div>
             @for (int i = 0; i < Model.Performers.Count; i++)
             {
+                var index = i + 1;
                 var item = Model.Performers[i];
                 var userName = string.Empty;
                 if (string.IsNullOrEmpty(item.CombinationName))
@@ -47,22 +78,46 @@
                     userName = item.CombinationName;
                 }
                 userName = userName.Trim('|');
-                <p>
-                    第@(NumberHelper.NumberToChinese((i + 1).ToString()))名：@item.TeamName - @(userName) - @item.ProgramName - @item.Score
-                </p>
+                <div class="list">
+                    <img src="~/Content/Image/no@(index).png" />
+                    <p>
+                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.TeamName - @(userName) - @item.ProgramName - @item.Score
+                    </p>
+                </div>
+
             }
         </div>
 
         <hr />
 
-        <div class="text-center">
-            <h1>方队排名</h1>
+        <div>
+            <div class="title">方队排名</div>
             @for (int i = 0; i < Model.Teams.Count; i++)
             {
                 var item = Model.Teams[i];
-                <p>
-                    第@(NumberHelper.NumberToChinese((i + 1).ToString()))名：@item.Name - @item.Fraction
-                </p>
+                var index = i + 1;
+                @*if (index < 4)
+                {
+                    <div class="list">
+                        <img src="~/Content/Image/no@(index).png" />
+                        <p>
+                            第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.Name - @item.Fraction
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="list">
+                        <p>
+                            第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.Name - @item.Fraction
+                        </p>
+                    </div>
+                }*@
+                <div class="list">
+                    <p style="margin: 0 auto">
+                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.Name - @item.Fraction
+                    </p>
+                </div>
             }
         </div>
     </div>
@@ -84,7 +139,7 @@
         }
                   @*开始链接*@
         $.connection.hub.start().done(function () {
-            
+
         }).fail(function (error) {
             alert("连接服务器失败！");
         });

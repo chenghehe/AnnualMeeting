@@ -198,6 +198,10 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Image\jjck2020.png" />
     <Content Include="Content\Image\jjck2020ms.png" />
+    <Content Include="Content\Image\list_bg.png" />
+    <Content Include="Content\Image\no1.png" />
+    <Content Include="Content\Image\no2.png" />
+    <Content Include="Content\Image\no3.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />

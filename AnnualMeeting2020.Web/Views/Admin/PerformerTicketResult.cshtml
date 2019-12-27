@@ -29,6 +29,14 @@
         .cont {
             width: 384px;
             background-color: #fff;
+            position: relative;
+        }
+        .cont > img {
+            position: absolute;
+            top: -24px;
+            left: -18px;
+            width: 110%;
+            height: 40px;
         }
 
         .list .title {
@@ -73,6 +81,7 @@
     <div @*class="container"*@>
         <div class="box">
             <div class="cont">
+                <img src="~/Content/Image/list_bg.png" alt="Alternate Text" />
                 <div class="list">
                     @for (int i = 0; i < 3; i++)
                     {
@@ -102,6 +111,7 @@
 
 
             <div class="cont">
+                <img src="~/Content/Image/list_bg.png" alt="Alternate Text" />
                 <div class="list">
                     @for (int i = 0; i < 3; i++)
                     {
