@@ -478,14 +478,14 @@ namespace AnnualMeeting2020.EntityFramwork
             var 罗理旺 = context.User.Add(new User { UserName = "罗理旺", Phone = "15977557426" });
             var 黄盼盼 = context.User.Add(new User { UserName = "黄盼盼", Phone = "13669698402" });
             var 张凤梅 = context.User.Add(new User { UserName = "张凤梅", Phone = "15277511018" });
-            var 张雄军 = context.User.Add(new User { UserName = "张雄军", Phone = "123456" });
-            var 杨杰 = context.User.Add(new User { UserName = "杨杰", Phone = "123456" });
-            var 李兴 = context.User.Add(new User { UserName = "李兴", Phone = "123456" });
-            var 陈剑波 = context.User.Add(new User { UserName = "陈剑波", Phone = "123456" });
-            var 龚晓丹 = context.User.Add(new User { UserName = "龚晓丹", Phone = "123456" });
-            var 欧宗庆 = context.User.Add(new User { UserName = "欧宗庆", Phone = "123456" });
-            var 李英德 = context.User.Add(new User { UserName = "李英德", Phone = "123456" });
-            var 符福伟 = context.User.Add(new User { UserName = "符福伟", Phone = "123456" });
+            var 张雄军 = context.User.Add(new User { UserName = "张雄军", Phone = "18677360166" });
+            var 杨杰 = context.User.Add(new User { UserName = "杨杰", Phone = "19977223737" });
+            var 李兴 = context.User.Add(new User { UserName = "李兴", Phone = "18407728054" });
+            var 陈剑波 = context.User.Add(new User { UserName = "陈剑波", Phone = "13807894310" });
+            var 龚晓丹 = context.User.Add(new User { UserName = "龚晓丹", Phone = "18507890664" });
+            var 欧宗庆 = context.User.Add(new User { UserName = "欧宗庆", Phone = "13084911689" });
+            var 李英德 = context.User.Add(new User { UserName = "李英德", Phone = "13707857586" });
+            var 符福伟 = context.User.Add(new User { UserName = "符福伟", Phone = "13807776780" });
 
             #endregion
 
