@@ -36,9 +36,10 @@
             }
             userName = userName.Trim('|');
         }
+
         <input readonly type="text"
-               data-id="@item.Id" 
-               @(item.IdPerform ? "onclick = selectItem(this)" : "onclick = alert(\"该选手未上台，暂不能投票！\")") class="form-control" 
+               data-id="@item.Id"
+               @(item.IdPerform ? "onclick = selectItem(this)" : "onclick = alert(\"该选手未上台，暂不能投票！\")") class="form-control"
                value="@(item.IsSelect ? " (已投)" : "") @item.TeamName - @userName - @item.ProgramName">
     </div>
 }
@@ -53,7 +54,8 @@
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
 
-            function selectItem(t) {
+        function selectItem(t) {
+            console.log(t);
                 var id = "#" + $(t).data("id");
                 if ($(id).prop("checked")) {
                     $(id).prop("checked", false);
