@@ -564,14 +564,14 @@ namespace AnnualMeeting2020.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddFraction(int tid, double youAndMeSing, double interaction)
+        public async Task<ActionResult> AddFraction(int tid, /*double youAndMeSing,*/ double interaction)
         {
             var uid = Convert.ToInt32(HttpContext.User.Identity.Name);
             if (await _db.User.AnyAsync(x => x.Id == uid && x.UserType.HasFlag(UserType.管理员)))
             {
                 var team = _db.Team.Find(tid);
 
-                team.YouAndMeSing = youAndMeSing;
+                //team.YouAndMeSing = youAndMeSing;
                 team.Interaction = interaction;
                 team.IsAdditionalFraction = true;
                 _db.Entry(team).State = EntityState.Modified;
@@ -623,14 +623,14 @@ namespace AnnualMeeting2020.Web.Controllers
                         .Where(x => x.PerformerId == item.Id).Any() ? judges_Performers
                         .Where(x => x.PerformerId == item.Id)
                         .Average(x => (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress)) : 0;
-                    var pw = pwagv > 0 ? Convert.ToDouble(pwagv) * 0.75 : 0;
+                    var pw = pwagv > 0 ? Convert.ToDouble(pwagv) * 0.6 : 0;
 
                     //2. 大众
                     var dzf = user_Performers
                         .Where(x => x.PerformerId == item.Id)
                         .DefaultIfEmpty()
                         .Count();
-                    var dz = (dzf == 0 ? 0 : dzf / userCount) * 100 * 0.2;
+                    var dz = (userCount == 0 ? 0 : dzf / userCount) * 100 * 0.35;
                     item.Score = item.FabulousFraction + pw + dz;
                     _db.Entry(item).State = EntityState.Modified;
                 }
@@ -654,7 +654,7 @@ namespace AnnualMeeting2020.Web.Controllers
 
                         //得分1，1. 方队3位歌手/组合总分取平均值，占比70%
                         var scoreSum = ps.DefaultIfEmpty().Sum(x => x.Score);
-                        var f1 = (scoreSum == 0 ? 0 : scoreSum / psCount) * 0.7;
+                        var f1 = (psCount == 0 ? 0 : scoreSum / psCount) * 0.7;
 
                         //最终得分
                         item.Fraction = item.Preliminaries + item.YouAndMeSing + item.Interaction + f1;

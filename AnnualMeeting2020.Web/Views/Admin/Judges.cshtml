@@ -113,7 +113,12 @@
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript">
-
+        $(".form-group input").focus(function () {
+            $("body").css({ "overflow": "hidden" });
+        })
+        $(".form-group input").blur(function () {
+            $("body").css({ "overflow": "auto" });
+        })
         $(function () {
             var wHeight = window.innerHeight;   //获取初始可视窗口高度
             window.addEventListener('resize', function () {       //监测窗口大小的变化事件
