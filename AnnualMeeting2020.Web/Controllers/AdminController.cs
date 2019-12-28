@@ -88,7 +88,7 @@ namespace AnnualMeeting2020.Web.Controllers
                     Sort = x.Sort,
                     CombinationName = x.CombinationName,
                     UserName = x.Users.Select(u => u.UserName),
-                }).OrderBy(x => x.TeamId).ThenBy(x => x.Sort).AsNoTracking().ToListAsync();
+                }).OrderBy(x => x.Sort).AsNoTracking().ToListAsync();
                 //var result = list.Select(x =>
                 // {
                 //     var entity = new SwitchViewModel

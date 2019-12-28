@@ -490,30 +490,30 @@ namespace AnnualMeeting2020.EntityFramwork
 
             #endregion
 
-            #region 方块队伍
+            #region 方队队伍
             var t1 = context.Team.Add(new Team
             {
-                Name = "方块一",
+                Name = "方队一",
                 Preliminaries = 1.2D,
             });
             var t2 = context.Team.Add(new Team
             {
-                Name = "方块二",
+                Name = "方队二",
                 Preliminaries = 2.1,
             });
             var t3 = context.Team.Add(new Team
             {
-                Name = "方块三",
+                Name = "方队三",
                 Preliminaries = 2.0,
             });
             var t4 = context.Team.Add(new Team
             {
-                Name = "方块四",
+                Name = "方队四",
                 Preliminaries = 1.4,
             });
             var t5 = context.Team.Add(new Team
             {
-                Name = "方块五",
+                Name = "方队五",
                 Preliminaries = 3.3,
             });
             #endregion
@@ -523,7 +523,7 @@ namespace AnnualMeeting2020.EntityFramwork
 
             #region 歌手
 
-            #region 方块一
+            #region 方队一
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 张珈铨 },
@@ -548,7 +548,7 @@ namespace AnnualMeeting2020.EntityFramwork
 
             #endregion
 
-            #region 方块二
+            #region 方队二
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 谢尚杰 },
@@ -572,7 +572,7 @@ namespace AnnualMeeting2020.EntityFramwork
             });
             #endregion
 
-            #region 方块三
+            #region 方队三
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 潘婕 },
@@ -596,7 +596,7 @@ namespace AnnualMeeting2020.EntityFramwork
             });
             #endregion
 
-            #region 方块四
+            #region 方队四
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 张南骁 },
@@ -620,7 +620,7 @@ namespace AnnualMeeting2020.EntityFramwork
             });
             #endregion
 
-            #region 方块五
+            #region 方队五
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 黄苗苗 },
