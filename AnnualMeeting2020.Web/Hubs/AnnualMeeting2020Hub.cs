@@ -59,7 +59,7 @@ namespace AnnualMeeting2020.Web.Hubs
             }
             Cache.Instance[AnnualMeeting2020Key.CACHE_SEND_MESSAGE_KEY + Context.User.Identity.Name] = DateTime.Now;
             var user = _db.User.Find(Convert.ToInt32(Context.User.Identity.Name));
-            Clients.All.addMessage(user.UserName, message);      //前端发送弹幕
+            Clients.All.addMessage(user.UserName, message.MessageFilter());      //前端发送弹幕
             _db.Message.Add(new Message
             {
                 User = user,
