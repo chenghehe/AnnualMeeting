@@ -35,10 +35,141 @@
         h1 {
             font-size: 80px;
         }
+        @@keyframes rotate{from{transform: rotate(0deg)}
+            to{transform: rotate(360deg)}
+        }
+        .box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        .round {
+            position: relative;
+            width: 800px;
+            height: 600px;
+        }
+        .title {
+            text-align: center;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            margin-left: -400px;
+            width: 800px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 38px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .rotate {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transition: All 0.4s ease-in-out;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+            animation: rotate 3s linear infinite;
+        }
+        #round_bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            margin-top: -300px;
+            margin-left: -300px;
+            width: 600px;
+            height: 600px;
+        }
+        #round1, #round1_1 {
+            margin-top: -110px;
+            margin-left: -110px;
+            width: 220px;
+            height: 220px;
+            z-index: 10;
+        }
+        #round2 {
+            margin-top: -150px;
+            margin-left: -150px;
+            width: 300px;
+            height: 300px;
+            z-index: 9;
+        }
+        #round3 {
+            margin-top: -190px;
+            margin-left: -190px;
+            width: 380px;
+            height: 380px;
+            z-index: 8;
+        }
+        #round4 {
+            position: absolute;
+            top: 92px;
+            left: 194px;
+            width: 230px;
+            height: 230px;
+            z-index: 7;
+        }
+        #round5 {
+            position: absolute;
+            top: 145px;
+            left: 64px;
+            width: 650px;
+            height: 300px;
+            z-index: 6;
+        }
+        .num {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 11;
+            margin-top: -100px;
+            margin-left: -100px;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .num > img{
+            width: 50px;
+            height: 80px;
+        }
     </style>
 </head>
 <body>
-
+    <div class="box">
+        <div class="round">
+            <div class="title">@ViewBag.Player</div>
+            <img id="round_bg" src="~/Content/Image/special/round_bg.png" />
+            <div class="num">
+                <img src="~/Content/Image/special/0.png" />
+                <img src="~/Content/Image/special/1.png" />
+                <img src="~/Content/Image/special/2.png" />
+            </div>
+            <img class="rotate" id="round1" src="~/Content/Image/special/round1.png" />
+            <img class="rotate" id="round1_1" src="~/Content/Image/special/round1_1.png" />
+            <img class="rotate" id="round2" src="~/Content/Image/special/round2.png" />
+            <img class="rotate" id="round3" src="~/Content/Image/special/round3.png" />
+            <img id="round4" src="~/Content/Image/special/round4.png" />
+            <img id="round5" src="~/Content/Image/special/round5.png" />
+        </div>
+        <div class="round">
+            <div  class="title">@ViewBag.Player</div>
+            <img id="round_bg" src="~/Content/Image/special/round_bg.png" />
+            <div class="num">
+                <img src="~/Content/Image/special/0.png" />
+                <img src="~/Content/Image/special/1.png" />
+                <img src="~/Content/Image/special/2.png" />
+            </div>
+            <img class="rotate" id="round1" src="~/Content/Image/special/round1.png" />
+            <img class="rotate" id="round1_1" src="~/Content/Image/special/round1_1.png" />
+            <img class="rotate" id="round2" src="~/Content/Image/special/round2.png" />
+            <img class="rotate" id="round3" src="~/Content/Image/special/round3.png" />
+            <img id="round4" src="~/Content/Image/special/round4.png" />
+            <img id="round5" src="~/Content/Image/special/round5.png" />
+        </div>
+    </div>
     <div>
         <div class="row">
             <div class="col-3">
@@ -88,6 +219,12 @@
             @*实时票数，用户投票时触发*@
             serverHub.client.currTicketCount = function (result) {
                 $(".currTicketCount").html(result);
+                var arr = String(result).split("");
+                $(".num").html('');
+                for (var i of arr) {
+                    var img = $('<img src"~/Content/Image/special/' + i + '.png">');
+                    $(".num").append(img);
+                }
             }
 
             @*切歌时触发*@
