@@ -38,10 +38,28 @@
         @@keyframes rotate{from{transform: rotate(0deg)}
             to{transform: rotate(360deg)}
         }
-        .round{
+        .box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        .round {
             position: relative;
             width: 800px;
             height: 600px;
+        }
+        .title {
+            text-align: center;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            margin-left: -400px;
+            width: 800px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 38px;
+            font-weight: 700;
+            color: #fff;
         }
         .rotate {
             position: absolute;
@@ -114,14 +132,30 @@
             align-items: center;
         }
         .num > img{
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 80px;
         }
     </style>
 </head>
 <body>
-    <div>
+    <div class="box">
         <div class="round">
+            <div class="title">@ViewBag.Player</div>
+            <img id="round_bg" src="~/Content/Image/special/round_bg.png" />
+            <div class="num">
+                <img src="~/Content/Image/special/0.png" />
+                <img src="~/Content/Image/special/1.png" />
+                <img src="~/Content/Image/special/2.png" />
+            </div>
+            <img class="rotate" id="round1" src="~/Content/Image/special/round1.png" />
+            <img class="rotate" id="round1_1" src="~/Content/Image/special/round1_1.png" />
+            <img class="rotate" id="round2" src="~/Content/Image/special/round2.png" />
+            <img class="rotate" id="round3" src="~/Content/Image/special/round3.png" />
+            <img id="round4" src="~/Content/Image/special/round4.png" />
+            <img id="round5" src="~/Content/Image/special/round5.png" />
+        </div>
+        <div class="round">
+            <div  class="title">@ViewBag.Player</div>
             <img id="round_bg" src="~/Content/Image/special/round_bg.png" />
             <div class="num">
                 <img src="~/Content/Image/special/0.png" />
