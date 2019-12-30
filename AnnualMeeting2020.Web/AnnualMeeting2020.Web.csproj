@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -204,6 +203,24 @@
     <Content Include="Content\Image\no1.png" />
     <Content Include="Content\Image\no2.png" />
     <Content Include="Content\Image\no3.png" />
+    <Content Include="Content\Image\special\0.png" />
+    <Content Include="Content\Image\special\1.png" />
+    <Content Include="Content\Image\special\2.png" />
+    <Content Include="Content\Image\special\3.png" />
+    <Content Include="Content\Image\special\4.png" />
+    <Content Include="Content\Image\special\5.png" />
+    <Content Include="Content\Image\special\6.png" />
+    <Content Include="Content\Image\special\7.png" />
+    <Content Include="Content\Image\special\8.png" />
+    <Content Include="Content\Image\special\9.png" />
+    <Content Include="Content\Image\special\round1.png" />
+    <Content Include="Content\Image\special\round1_1.png" />
+    <Content Include="Content\Image\special\round2.png" />
+    <Content Include="Content\Image\special\round3.png" />
+    <Content Include="Content\Image\special\round4.png" />
+    <Content Include="Content\Image\special\round5.png" />
+    <Content Include="Content\Image\special\round_bg.png" />
+    <Content Include="Content\Image\special\组 16 拷贝%402x.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
