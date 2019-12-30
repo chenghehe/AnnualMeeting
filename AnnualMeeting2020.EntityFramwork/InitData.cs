@@ -527,7 +527,7 @@ namespace AnnualMeeting2020.EntityFramwork
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 张珈铨 },
-                ProgramName = "南山南",
+                ProgramName = "恋爱ing",
                 Team = t1,
                 Sort = 1,
             });
