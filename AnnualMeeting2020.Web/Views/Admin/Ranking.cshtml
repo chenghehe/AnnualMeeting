@@ -81,7 +81,7 @@
                 <div class="list">
                     <img src="~/Content/Image/no@(index).png" />
                     <p>
-                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.TeamName - @(userName) - @item.ProgramName - @item.Score
+                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.TeamName - @(userName) - @item.ProgramName - @item.Score.ToString("F2")
                     </p>
                 </div>
 
@@ -115,7 +115,7 @@
                 }*@
                 <div class="list">
                     <p style="margin: 0 auto">
-                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.Name - @item.Fraction
+                        第@(NumberHelper.NumberToChinese((index).ToString()))名：@item.Name - @item.Fraction.ToString("F2")
                     </p>
                 </div>
             }

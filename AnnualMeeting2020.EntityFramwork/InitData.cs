@@ -529,21 +529,21 @@ namespace AnnualMeeting2020.EntityFramwork
                 Users = new List<User> { 张珈铨 },
                 ProgramName = "恋爱ing",
                 Team = t1,
-                Sort = 1,
+                Sort = 12,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 谭剑雄 },
                 ProgramName = "果汁分你一半",
                 Team = t1,
-                Sort = 6,
+                Sort = 2,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 葛施梦 },
                 ProgramName = "我要我们在一起",
                 Team = t1,
-                Sort = 11,
+                Sort = 9,
             });
 
             #endregion
@@ -554,21 +554,21 @@ namespace AnnualMeeting2020.EntityFramwork
                 Users = new List<User> { 谢尚杰 },
                 ProgramName = "南方姑娘",
                 Team = t2,
-                Sort = 2,
+                Sort = 10,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 杨超雄 },
                 ProgramName = "遥远的她",
                 Team = t2,
-                Sort = 7,
+                Sort = 1,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 陈玉兰 },
                 ProgramName = "世界上的另一个我",
                 Team = t2,
-                Sort = 12,
+                Sort = 3,
             });
             #endregion
 
@@ -578,21 +578,21 @@ namespace AnnualMeeting2020.EntityFramwork
                 Users = new List<User> { 潘婕 },
                 ProgramName = "最长的电影",
                 Team = t3,
-                Sort = 3,
+                Sort = 13,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 罗敏芳 },
                 ProgramName = "可不可以不勇敢",
                 Team = t3,
-                Sort = 8,
+                Sort = 7,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 骆晓云 },
                 ProgramName = "少女的祈祷",
                 Team = t3,
-                Sort = 13,
+                Sort = 11,
             });
             #endregion
 
@@ -602,21 +602,21 @@ namespace AnnualMeeting2020.EntityFramwork
                 Users = new List<User> { 张南骁 },
                 ProgramName = "Life's A Struggle",
                 Team = t4,
-                Sort = 4,
+                Sort = 8,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 曾皓 },
                 ProgramName = "一丝不挂",
                 Team = t4,
-                Sort = 9,
+                Sort = 6,
             });
             context.Performer.Add(new Performer
             {
                 Users = new List<User> { 陈晚冬 },
                 ProgramName = "匆匆那年",
                 Team = t4,
-                Sort = 14,
+                Sort = 4,
             });
             #endregion
 
@@ -641,7 +641,7 @@ namespace AnnualMeeting2020.EntityFramwork
                 Users = new List<User> { 潘美燕 },
                 ProgramName = "阿刁",
                 Team = t5,
-                Sort = 10,
+                Sort = 14,
             });
             #endregion
 

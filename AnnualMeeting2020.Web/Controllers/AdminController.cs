@@ -469,6 +469,7 @@ namespace AnnualMeeting2020.Web.Controllers
             {
                 Performers = await _db.Performer
                 .AsNoTracking()
+                .OrderByDescending(x => x.Score)
                 .Select(x => new PerformerOut
                 {
                     ProgramName = x.ProgramName,
@@ -478,16 +479,15 @@ namespace AnnualMeeting2020.Web.Controllers
                     Score = x.Score,
                     UserName = x.Users.Select(u => u.UserName),
                 })
-                .OrderByDescending(x => x.Score)
                 .Take(3)
                 .ToListAsync(cancellationToke),
                 Teams = await _db.Team
+                .OrderByDescending(x => x.Fraction)
                 .Select(x => new TeamOut
                 {
                     Name = x.Name,
                     Fraction = x.Fraction,
                 })
-                .OrderByDescending(x => x.Fraction)
                 //.Take(3)
                 .ToListAsync(cancellationToke)
             };
@@ -555,7 +555,7 @@ namespace AnnualMeeting2020.Web.Controllers
         /// <returns></returns>
         public async Task<ActionResult> AddFraction(CancellationToken cancellationToke)
         {
-            var list = _db.Team.Where(x => !x.IsAdditionalFraction).ToListAsync(cancellationToke);
+            var list = _db.Team/*.Where(x => !x.IsAdditionalFraction)*/.ToListAsync(cancellationToke);
             return View(await list);
         }
 
@@ -572,7 +572,7 @@ namespace AnnualMeeting2020.Web.Controllers
                 var team = _db.Team.Find(tid);
 
                 //team.YouAndMeSing = youAndMeSing;
-                team.Interaction = interaction;
+                team.Interaction += interaction;
                 team.IsAdditionalFraction = true;
                 _db.Entry(team).State = EntityState.Modified;
                 var result = await _db.SaveChangesAsync();
@@ -630,7 +630,7 @@ namespace AnnualMeeting2020.Web.Controllers
                         .Where(x => x.PerformerId == item.Id)
                         .DefaultIfEmpty()
                         .Count();
-                    var dz = (userCount == 0 ? 0 : dzf / userCount) * 100 * 0.35;
+                    var dz = (userCount == 0 ? 0 : dzf / (userCount * 1.00)) * 100 * 0.35;
                     item.Score = item.FabulousFraction + pw + dz;
                     _db.Entry(item).State = EntityState.Modified;
                 }
@@ -654,7 +654,7 @@ namespace AnnualMeeting2020.Web.Controllers
 
                         //得分1，1. 方队3位歌手/组合总分取平均值，占比70%
                         var scoreSum = ps.DefaultIfEmpty().Sum(x => x.Score);
-                        var f1 = (psCount == 0 ? 0 : scoreSum / psCount) * 0.7;
+                        var f1 = (psCount == 0 ? 0 : scoreSum / (psCount * 1.00)) * 0.7;
 
                         //最终得分
                         item.Fraction = item.Preliminaries + item.YouAndMeSing + item.Interaction + f1;

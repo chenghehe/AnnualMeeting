@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -199,6 +200,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Image\jjck2020.png" />
     <Content Include="Content\Image\jjck2020ms.png" />
+    <Content Include="Content\Image\jjck_xs.jpg" />
     <Content Include="Content\Image\list_bg.png" />
     <Content Include="Content\Image\no1.png" />
     <Content Include="Content\Image\no2.png" />
