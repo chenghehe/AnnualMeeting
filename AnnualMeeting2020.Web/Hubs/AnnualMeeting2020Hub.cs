@@ -172,7 +172,7 @@ namespace AnnualMeeting2020.Web.Hubs
                 {
                     performer.IdPerform = true;
                     _db.Entry(performer).State = EntityState.Modified;
-                    await _db.SaveChangesAsync();
+                    var result = await _db.SaveChangesAsync();
                 }
 
                 Refresh();  //刷新评委页面

@@ -260,7 +260,7 @@ namespace AnnualMeeting2020.EntityFramwork
             var 兰艳 = context.User.Add(new User { UserName = "兰艳", Phone = "15994419212" });
             var 梁艳英 = context.User.Add(new User { UserName = "梁艳英", Phone = "15078869793" });
             var 苏美娜 = context.User.Add(new User { UserName = "苏美娜", Phone = "18776160860" });
-            var 苏振兴 = context.User.Add(new User { UserName = "苏振兴", Phone = "15506802806" });
+            var 苏振兴 = context.User.Add(new User { UserName = "苏振兴", Phone = "18697925564" });
             var 韦小秋 = context.User.Add(new User { UserName = "韦小秋", Phone = "13878195712" });
             var 韦艳玲 = context.User.Add(new User { UserName = "韦艳玲", Phone = "18877834638" });
             var 吴佩芳 = context.User.Add(new User { UserName = "吴佩芳", Phone = "13737154663" });
@@ -269,13 +269,12 @@ namespace AnnualMeeting2020.EntityFramwork
             var 蓝芬玲 = context.User.Add(new User { UserName = "蓝芬玲", Phone = "18577115816" });
             var 李广清 = context.User.Add(new User { UserName = "李广清", Phone = "13517889332" });
             var 蒙金娜 = context.User.Add(new User { UserName = "蒙金娜", Phone = "13978873292" });
-            var 白淼鑫 = context.User.Add(new User { UserName = "白淼鑫", Phone = "18091995556" });
             var 陈建裕 = context.User.Add(new User { UserName = "陈建裕", Phone = "18587690350" });
             var 程世华 = context.User.Add(new User { UserName = "程世华", Phone = "15978145659" });
             var 甘榜运 = context.User.Add(new User { UserName = "甘榜运", Phone = "13457629586" });
             var 苏华浩 = context.User.Add(new User { UserName = "苏华浩", Phone = "15219887889" });
             var 覃先武 = context.User.Add(new User { UserName = "覃先武", Phone = "18077162204" });
-            var 奚泽晓 = context.User.Add(new User { UserName = "奚泽晓", Phone = "15177177584" });
+            var 奚泽晓 = context.User.Add(new User { UserName = "奚泽晓", Phone = "15277128405" });
             var 谢尚杰 = context.User.Add(new User { UserName = "谢尚杰", Phone = "18577791097" });
             var 曾金凤 = context.User.Add(new User { UserName = "曾金凤", Phone = "18260932099" });
             var 陈明君 = context.User.Add(new User { UserName = "陈明君", Phone = "18978182190" });
@@ -329,6 +328,8 @@ namespace AnnualMeeting2020.EntityFramwork
             var 唐硕 = context.User.Add(new User { UserName = "唐硕", Phone = "15078814268" });
             var 吴娟 = context.User.Add(new User { UserName = "吴娟", Phone = "15677018843" });
             var 张倩 = context.User.Add(new User { UserName = "张倩", Phone = "15277105212" });
+            var 杨土康 = context.User.Add(new User { UserName = "杨土康", Phone = "15768671860" });
+            var 袁洪源 = context.User.Add(new User { UserName = "袁洪源", Phone = "13367533629" });
             var 黄礼司 = context.User.Add(new User { UserName = "黄礼司", Phone = "18276122076" });
             var 黄礼祝 = context.User.Add(new User { UserName = "黄礼祝", Phone = "13788683814" });
             var 梁娜 = context.User.Add(new User { UserName = "梁娜", Phone = "18074940096" });
@@ -357,8 +358,6 @@ namespace AnnualMeeting2020.EntityFramwork
             var 农学杰 = context.User.Add(new User { UserName = "农学杰", Phone = "17677165296" });
             var 王家富 = context.User.Add(new User { UserName = "王家富", Phone = "15177123349" });
             var 吴邕萍 = context.User.Add(new User { UserName = "吴邕萍", Phone = "13707886525" });
-            var 杨土康 = context.User.Add(new User { UserName = "杨土康", Phone = "15768671860" });
-            var 袁洪源 = context.User.Add(new User { UserName = "袁洪源", Phone = "13367533629" });
             var 何翠华 = context.User.Add(new User { UserName = "何翠华", Phone = "15994431272" });
             var 何嘉桦 = context.User.Add(new User { UserName = "何嘉桦", Phone = "15978123970" });
             var 黄崇光 = context.User.Add(new User { UserName = "黄崇光", Phone = "13977781722" });
@@ -456,7 +455,7 @@ namespace AnnualMeeting2020.EntityFramwork
             var 廖程 = context.User.Add(new User { UserName = "廖程", Phone = "18677580740" });
             var 林开国 = context.User.Add(new User { UserName = "林开国", Phone = "18677587087" });
             var 陈国霜 = context.User.Add(new User { UserName = "陈国霜", Phone = "18277550669" });
-            var 张军 = context.User.Add(new User { UserName = "张军", Phone = "15207852170" });
+            var 张军 = context.User.Add(new User { UserName = "张军", Phone = "17377071988" });
             var 周年达 = context.User.Add(new User { UserName = "周年达", Phone = "18376764490" });
             var 庞翠敏 = context.User.Add(new User { UserName = "庞翠敏", Phone = "13557759691" });
             var 谭小平 = context.User.Add(new User { UserName = "谭小平", Phone = "13877561665" });
@@ -476,7 +475,7 @@ namespace AnnualMeeting2020.EntityFramwork
             var 岑雯妤 = context.User.Add(new User { UserName = "岑雯妤", Phone = "15977568621" });
             var 梁春美 = context.User.Add(new User { UserName = "梁春美", Phone = "14795768829" });
             var 罗理旺 = context.User.Add(new User { UserName = "罗理旺", Phone = "15977557426" });
-            var 黄盼盼 = context.User.Add(new User { UserName = "黄盼盼", Phone = "13669698402" });
+            var 黄盼盼 = context.User.Add(new User { UserName = "黄盼盼", Phone = "18169709436" });
             var 张凤梅 = context.User.Add(new User { UserName = "张凤梅", Phone = "15277511018" });
             var 张雄军 = context.User.Add(new User { UserName = "张雄军", Phone = "18677360166" });
             var 杨杰 = context.User.Add(new User { UserName = "杨杰", Phone = "19977223737" });
@@ -486,8 +485,11 @@ namespace AnnualMeeting2020.EntityFramwork
             var 欧宗庆 = context.User.Add(new User { UserName = "欧宗庆", Phone = "13084911689" });
             var 李英德 = context.User.Add(new User { UserName = "李英德", Phone = "13707857586" });
             var 符福伟 = context.User.Add(new User { UserName = "符福伟", Phone = "13807776780" });
-
-            #region 新加用户，学校老师，实习生
+            var 熊灏 = context.User.Add(new User { UserName = "熊灏", Phone = "18907713928" });
+            var 朱华 = context.User.Add(new User { UserName = "朱华", Phone = "13807809180" });
+            var 刘善景 = context.User.Add(new User { UserName = "刘善景", Phone = "13877134043" });
+            var 易小燕 = context.User.Add(new User { UserName = "易小燕", Phone = "15994312398" });
+            var 汤荟琛 = context.User.Add(new User { UserName = "汤荟琛", Phone = "13471196815" });
             var 赖铭轩 = context.User.Add(new User { UserName = "赖铭轩", Phone = "13277711572" });
             var 韩箐 = context.User.Add(new User { UserName = "韩箐", Phone = "15678169985" });
             var 林峰 = context.User.Add(new User { UserName = "林峰", Phone = "13276062689" });
@@ -508,12 +510,6 @@ namespace AnnualMeeting2020.EntityFramwork
             var 龚思维 = context.User.Add(new User { UserName = "龚思维", Phone = "15677049753" });
             var 姚业婷 = context.User.Add(new User { UserName = "姚业婷", Phone = "18807891376" });
             var 刘梦彩 = context.User.Add(new User { UserName = "刘梦彩", Phone = "19968180486" });
-            var 熊灏 = context.User.Add(new User { UserName = "熊灏", Phone = "18907713928" });
-            var 朱华 = context.User.Add(new User { UserName = "朱华", Phone = "13807809180" });
-            var 刘善景 = context.User.Add(new User { UserName = "刘善景", Phone = "13877134043" });
-            var 易小燕 = context.User.Add(new User { UserName = "易小燕", Phone = "15994312398" });
-            var 汤荟琛 = context.User.Add(new User { UserName = "汤荟琛", Phone = "13471196815" });
-            #endregion
 
             #endregion
 
