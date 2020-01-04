@@ -50,7 +50,7 @@ namespace AnnualMeeting2020.EntityFramwork.Models
         /// <summary>
         /// 朋友圈或者微视频点赞数 得分
         /// </summary>
-        public double FabulousFraction { get; set; } = 0;
+        public double FabulousFraction { get; set; } = 5;
 
         /// <summary>
         /// 最终得分

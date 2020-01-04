@@ -25,7 +25,7 @@ namespace AnnualMeeting2020.EntityFramwork.Models
         /// <summary>
         /// 我想和你唱 环节得分
         /// </summary>        
-        public double YouAndMeSing { get; set; } = 0;
+        public double YouAndMeSing { get; set; } = 10;
 
         /// <summary>
         /// 互动得分
