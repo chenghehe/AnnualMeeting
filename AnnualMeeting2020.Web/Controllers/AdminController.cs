@@ -5,6 +5,7 @@ using AnnualMeeting2020.Web.Models;
 using System;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -17,10 +18,12 @@ namespace AnnualMeeting2020.Web.Controllers
     public class AdminController : Controller
     {
         private readonly AnnualMeetingContext _db;
+        private readonly NPOIExcelHelper nPOIExcelHelper;
 
-        public AdminController(AnnualMeetingContext db)
+        public AdminController(AnnualMeetingContext db, NPOIExcelHelper nPOIExcelHelper)
         {
             _db = db;
+            this.nPOIExcelHelper = nPOIExcelHelper;
         }
 
         /// <summary>
@@ -494,7 +497,6 @@ namespace AnnualMeeting2020.Web.Controllers
             return View(rankModel);
         }
 
-
         /// <summary>
         /// 添加用户
         /// </summary>
@@ -673,6 +675,87 @@ namespace AnnualMeeting2020.Web.Controllers
         }
 
         /// <summary>
+        /// 导出excl
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async Task<ActionResult> Execl(CancellationToken cancellationToke)
+        {
+            var rankModel = new RankingOut
+            {
+                Performers = await _db.Performer
+              .AsNoTracking()
+              .OrderByDescending(x => x.Score)
+              .Select(x => new PerformerOut
+              {
+                  ProgramName = x.ProgramName,
+                  CombinationName = x.CombinationName,
+                  TeamName = x.Team.Name,
+                  IdPerform = x.IdPerform,
+                  Score = x.Score,
+                  UserName = x.Users.Select(u => u.UserName),
+              })
+              .ToListAsync(cancellationToke),
+
+                Teams = await _db.Team
+              .OrderByDescending(x => x.Fraction)
+              .Select(x => new TeamOut
+              {
+                  Name = x.Name,
+                  Fraction = x.Fraction,
+              })
+              .ToListAsync(cancellationToke)
+            };
+
+            //歌手得票
+            var sql = "select b.Name as TeamName, a.*, (select count(*) from [dbo].[User_Performer] where PerformerId=a.Id) as Count from [dbo].[Performer] as a left join [dbo].[Team] as b on b.Id=a.TeamId ";
+            var queryResult = _db.Database.SqlQuery<PerformerTicketResultOut>(sql)/*.GroupBy(x=>x.TeamName)*/.OrderBy(x => x.Count).ToList();
+            queryResult.ForEach(async item =>
+            {
+                var users = _db.Performer.Find(item.Id).Users;
+                var userName = string.Empty;
+                if (string.IsNullOrEmpty(item.CombinationName))
+                {
+                    foreach (var user in users)
+                    {
+                        userName += user.UserName + "|";
+                    }
+                }
+                else
+                {
+                    userName = item.CombinationName;
+                }
+                item.UserName = userName.Trim('|');
+            });
+
+
+            //评委打分
+            var judges_Performer = await _db.Judges_Performer
+                        .Select(x => new JudgesOut
+                        {
+                            Name = x.User.UserName,
+                            Fraction = (x.Feeling + x.Pronounce + x.Intonation + x.Performance + x.Progress),
+                            ProgramName = x.Performer.ProgramName,
+                            TeamName = x.Performer.Team.Name,
+                            UserName = x.Performer.Users.Select(u => u.UserName),
+                        })
+                        .OrderByDescending(x => x.Fraction)
+                        .ToListAsync(cancellationToke);
+
+
+            nPOIExcelHelper.SimpleTableToExcel(nPOIExcelHelper.ToDataTable(queryResult, tableName: "歌手票数"), Path.Combine(@"D:\", "歌手票数.xlsx"));
+
+            nPOIExcelHelper.SimpleTableToExcel(nPOIExcelHelper.ToDataTable(rankModel.Performers, tableName: "歌手得分"), Path.Combine(@"D:\", "歌手得分.xlsx"));
+
+            nPOIExcelHelper.SimpleTableToExcel(nPOIExcelHelper.ToDataTable(rankModel.Teams, "方队得分"), Path.Combine(@"D:\", "方队得分.xlsx"));
+
+            nPOIExcelHelper.SimpleTableToExcel(nPOIExcelHelper.ToDataTable(judges_Performer, "评委打分"), Path.Combine(@"D:\", "评委打分.xlsx"));
+
+            return View(rankModel);
+        }
+
+
+        /// <summary>
         /// 获取当前登录用户
         /// </summary>
         /// <returns></returns>
@@ -692,5 +775,7 @@ namespace AnnualMeeting2020.Web.Controllers
             }
             return user;
         }
+
+
     }
 }

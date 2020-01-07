@@ -1,3 +1,4 @@
+using AnnualMeeting2020.Common;
 using AnnualMeeting2020.EntityFramwork;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -41,6 +42,7 @@ namespace AnnualMeeting2020.Web
             //builder.RegisterFilterProvider();
 
             builder.RegisterType<AnnualMeetingContext>().InstancePerLifetimeScope();
+            builder.RegisterType<NPOIExcelHelper>().InstancePerDependency();
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
